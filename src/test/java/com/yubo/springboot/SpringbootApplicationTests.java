@@ -1,11 +1,15 @@
 package com.yubo.springboot;
 
 import com.yubo.springboot.modal.AyUser;
+import com.yubo.springboot.service.AyUserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /*SpringRunner继承了SpringJunit4ClassRunner
@@ -23,6 +27,8 @@ class SpringbootApplicationTests {
      * */
     @Resource
     private JdbcTemplate jdbcTemplate;
+    @Resource
+    private AyUserService ayUserService;
 
     @Test
     void contextLoads() {
@@ -46,6 +52,35 @@ class SpringbootApplicationTests {
         userList.stream().forEach(ayUser -> {
             System.out.println(ayUser);
         });
+    }
+
+    @Test
+    public void testJpaRepository() {
+        List<AyUser> ayUserList = ayUserService.findAll();
+        System.out.println(ayUserList);
+
+        System.out.println(ayUserService.findById("1"));
+
+        System.out.println(ayUserService.findByName("张三"));
+
+        System.out.println(ayUserService.findByNameLike("%四%"));
+
+        List<String> ids = new ArrayList<>();
+        ids.add("1");
+        ids.add("2");
+        System.out.println(ayUserService.findByIdIn(ids));
+
+
+        PageRequest pageRequest = PageRequest.of(0, 2);
+        Page page = ayUserService.findAll(pageRequest);
+        System.out.println(page.getTotalElements());
+        System.out.println(page.getContent());
+
+        AyUser ayUser = new AyUser();
+        ayUser.setId("3");
+        ayUser.setName("王五");
+        ayUser.setPassword("123456");
+        System.out.println(ayUserService.save(ayUser));
     }
 
 }
