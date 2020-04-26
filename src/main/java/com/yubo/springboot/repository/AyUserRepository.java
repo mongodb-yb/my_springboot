@@ -13,6 +13,10 @@ import java.util.List;
  * JpaRepository<T, ID> T：对应的实体类型  ID：对应的实体的id字段的类型
  * 这里T 是AyUser，ID 是String类型
  * 同时，在AyUser的实体使用注解，与数据库表建立映射关系
+ *
+ * 事务：
+ * JpaRepository和SimpleJpaRepository，由源码可知，后者默认开启了事务{@link org.springframework.data.jpa.repository.support.SimpleJpaRepository} 。
+ * 因此，AyUserRepository需要手动开启事务，因此，在yUser的service实现类中使用注解，见service实现类{@link com.yubo.springboot.service.impl.AyUserServiceImpl}
  * @date 2020/4/24 14:39
  */
 public interface AyUserRepository extends JpaRepository<AyUser, String> {

@@ -1,0 +1,5 @@
+1、springboot事务
+    只需要@Transactional注解就可以了。
+    因为SpringBoot默认对ORM框架，如JPA/JDBC/Mybatis开启了事务，就在引入其jar包依赖的时候，事务就默认开启了。
+    如果要是用其他的ORM框架：BeatSQL，则需要配置相关的事务管理器。
+    无需显示的使用@EnableTransactionManagement注解。

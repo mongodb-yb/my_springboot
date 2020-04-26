@@ -6,6 +6,7 @@ import com.yubo.springboot.service.AyUserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Collection;
@@ -24,7 +25,11 @@ import java.util.List;
  *
  * @Component注解泛指组件，当组件不好归类时可以使用该注解。
  * @Repository注解指DAO组件，即数据访问组件
+ *
+ * 事务
+ * 在service层开启注解：在类上使用，表示该类的所有public方法都开启了事务，即类级事务。
  */
+@Transactional(rollbackFor = Exception.class)
 @Service
 public class AyUserServiceImpl implements AyUserService {
 
@@ -50,9 +55,21 @@ public class AyUserServiceImpl implements AyUserService {
         return ayUserRepository.findAll();
     }
 
+    /**
+     * 事务测试
+     * 方法级别的事务会覆盖类级别的事务。
+     *
+     * @param ayUser
+     * @return
+     */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public AyUser save(AyUser ayUser) {
-        return ayUserRepository.save(ayUser);
+        AyUser ayUser1 = ayUserRepository.save(ayUser);
+        String testTransactional = null;
+        testTransactional.split("l");
+
+        return ayUser1;
     }
 
     @Override

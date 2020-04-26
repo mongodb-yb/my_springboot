@@ -76,9 +76,17 @@ class SpringbootApplicationTests {
         System.out.println(page.getTotalElements());
         System.out.println(page.getContent());
 
+
+    }
+
+    /**
+     * 测试出现异常：插入user的事务回滚。
+     */
+    @Test
+    public void testTransactional(){
         AyUser ayUser = new AyUser();
-        ayUser.setId("3");
-        ayUser.setName("王五");
+        ayUser.setId("4");
+        ayUser.setName("赵六");
         ayUser.setPassword("123456");
         System.out.println(ayUserService.save(ayUser));
     }
