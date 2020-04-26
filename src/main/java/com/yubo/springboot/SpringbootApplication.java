@@ -4,14 +4,18 @@ import com.yubo.springboot.filter.JavaDemoAyUserFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
+
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 
 @SpringBootApplication
 // 使用该注解表示自动注册，无需任何代码
 // Servlet直接通过@WebServlet自动注册到容器
 // Filter直接通过@WebFilter自动注册到容器
 // Listener直接通过@WebListener自动注册到容器
-//@ServletComponentScan
+@ServletComponentScan
 public class SpringbootApplication {
 
     public static void main(String[] args) {
@@ -31,4 +35,20 @@ public class SpringbootApplication {
         return filterRegistrationBean;
     }
 
+//    @Bean
+    public ServletContextListener getListener() {
+        ServletContextListener servletContextListener = new ServletContextListener() {
+            @Override
+            public void contextInitialized(ServletContextEvent sce) {
+                System.out.println("哈哈，监听对象的创建");
+            }
+
+            @Override
+            public void contextDestroyed(ServletContextEvent sce) {
+                System.out.println("监听对象的销毁");
+            }
+        };
+
+        return servletContextListener;
+    }
 }

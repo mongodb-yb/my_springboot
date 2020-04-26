@@ -20,7 +20,7 @@ import java.io.IOException;
 // url-pattern：过滤器的url匹配模式，等价于xml的<url-pattern>
 // value等价于url-pattern，但是两者不能同时使用
 // 开发完拦截器类后，需要将其注入到ioc容器中：在启动类中使用@ServletComponentScan注解
-@WebFilter(filterName = "ayUserFilter", urlPatterns = "/*")
+//@WebFilter(filterName = "ayUserFilter", urlPatterns = "/*")
 public class AuToAyUserFilter implements Filter {
 
     @Override
