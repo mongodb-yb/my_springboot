@@ -1,0 +1,5 @@
+1、springboot 支持多种类型的缓存，比如EhCache、JCache、Redis等。在不添加任何额外配置的情况下
+    springboot默认使用SimpleCacheConfiguration.
+配置Redis
+2、引入spring-boot-starter-data-redis的相关依赖
+3、在applicatio.properties的配置文件中进行redis的配置

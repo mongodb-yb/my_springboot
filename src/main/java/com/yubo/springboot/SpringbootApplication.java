@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -35,6 +36,11 @@ public class SpringbootApplication {
         return filterRegistrationBean;
     }
 
+    /**
+     * java代码方式注册监听器到容器中
+     *
+     * @return
+     */
 //    @Bean
     public ServletContextListener getListener() {
         ServletContextListener servletContextListener = new ServletContextListener() {

@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.annotation.Resource;
@@ -83,12 +85,40 @@ class SpringbootApplicationTests {
      * 测试出现异常：插入user的事务回滚。
      */
     @Test
-    public void testTransactional(){
+    public void testTransactional() {
         AyUser ayUser = new AyUser();
         ayUser.setId("4");
         ayUser.setName("赵六");
         ayUser.setPassword("123456");
         System.out.println(ayUserService.save(ayUser));
+    }
+
+    @Resource
+    private RedisTemplate redisTemplate;
+
+    /**
+     * 测试spring-boot集成redis：RedisTemplate
+     */
+    @Test
+    public void testRedisTemplate() {
+        // 添加键值对
+//        redisTemplate.opsForValue().set("name", "value0");
+        // 更新键值对
+//        redisTemplate.opsForValue().set("name", "value1");
+        // 查询键值对
+//        String value = (String) redisTemplate.opsForValue().get("name");
+//        System.out.println(value);
+        // 删除键值对
+        redisTemplate.delete("name");
+    }
+
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
+
+    @Test
+    public void testStringRedisTemplate() {
+        stringRedisTemplate.opsForValue().set("name", "波仔");
+        stringRedisTemplate.opsForValue().set("name", "Jack");
     }
 
 }
