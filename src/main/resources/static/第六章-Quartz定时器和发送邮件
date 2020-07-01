@@ -1,0 +1,35 @@
+一、概述
+    java编写的开源任务调度框架。
+    作用：定时发送消息，定时生成报表。
+    原理：基于多线程
+二、框架核心
+    调度器（Scheduler）、触发器（Trigger）、任务（Job）。
+    调度器：任务总指挥；
+    触发器：任务执行者；
+    任务：业务功能模块。
+
+    Job：一个接口，只有一个execute方法。业务功能类需要实现该接口，重写execute方法。
+        execute方法接收一个JobExecutionContext 参数，该类提供了调度上下文的各种信息，包括：调度器，触发器等。
+        public interface Job {
+            void execute(JobExecutionContext var1) throws JobExecutionException;
+        }
+    Quartz在每次执行Job时，都重新创建一个Job实例，所以它不直接接收一个Job实例，相反它接收一个Job实现类，
+    以便运行时通过newInstance反射实例化Job。因此，需要一个类，来描述Job实现类及其它相关的静态信息，如Job的名称、描述
+    等信息，这个类就是JobDetail。JobDetail可以有多个Trigger，但是一个Trigger只有一个JobDetail。
+
+    Trigger：描述触发Job的执行规则。有SimpleTrigger和CronTrigger两个子类。
+             如果触发一次或者周期性触发执行，则使用SimpleTrigger。
+             如果以复杂时间规则进行调度，则通过Cron表达式定义时间规则。
+             Cron格式：秒 分 小时 日 月 周 年
+             格式： ［秒］ ［分］ ［小时］ ［日］ ［月］ ［周］ ［年］
+             0 0 12 * * ?   每天12点触发
+             0 0-5 14 * * ? 每天下午的2点到2点05分每分触发
+
+    Schedule：负责Quartz的运行环境。Trigger和JobDetail可以注册到Schedule中，Scheduler可以将Trigger绑定到JobDetail中，
+    当Trigger触发时，Job就会执行。
+
+三、配置Quartz
+    1、xml方式
+    2、注解方式
+
+
