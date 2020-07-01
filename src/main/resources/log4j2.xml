@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Configuration status="WARN">
+    <Appenders>
+        <!--日志输出源-->
+        <Console name="Console" target="SYSTEM_OUT">
+            <!--日志输出格式-->
+            <PatternLayout pattern="[%d{HH:mmss:SSS}]  [%p] - %1 - %m%n"/>
+        </Console>
+        <!--日志输出到文件 fileName定义输出文件路径 filePattern定义日志文件格式-->
+        <RollingFile name="RollingFileInfo" fileName="C:\Users\Administrator\Desktop\log.txt"
+                     filePattern="C:\Users\Administrator\Desktop\$${date:yyyy-MM}\log-%d{yyyy-MM-dd}.txt}">
+            <!--定义日志过滤策略-->
+            <Filters>
+                <!--指定日志的最低输出级别，默认为DEBUG-->
+                <ThresholdFilter level="INFO"/>
+            </Filters>
+            <!--日志输出格式-->
+            <PatternLayout pattern="[%d{HH:mmss:SSS}]  [%p] - %1 - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="100MB"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <root level="all">
+            <!--控制台輸出-->
+            <appender-ref ref="Console"/>
+            <appender-ref ref="RollingFileInfo"/>
+        </root>
+    </Loggers>
+</Configuration>

@@ -3,6 +3,8 @@ package com.yubo.springboot.service.impl;
 import com.yubo.springboot.modal.AyUser;
 import com.yubo.springboot.repository.AyUserRepository;
 import com.yubo.springboot.service.AyUserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,8 @@ import java.util.List;
 @Transactional(rollbackFor = Exception.class)
 @Service
 public class AyUserServiceImpl implements AyUserService {
+
+    private final Logger logger = LogManager.getLogger(AyUserServiceImpl.class);
 
     /**
      * @Resource注解：该注解是J2EE的注解，默认使用名称进行装配。当找不到名称匹配的Bean时，才按照类型进行匹配。
@@ -75,6 +79,7 @@ public class AyUserServiceImpl implements AyUserService {
     @Override
     public void delete(AyUser ayUser) {
         ayUserRepository.delete(ayUser);
+        logger.info("删除用户：" + ayUser.getName() + "的信息");
     }
 
     /**

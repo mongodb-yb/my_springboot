@@ -134,4 +134,16 @@ class SpringbootApplicationTests {
         redisTemplate.opsForList().range("all_user_list", 0, -1).stream().forEach(item -> System.out.println(new Gson().toJson(item)));
     }
 
+    /**
+     * 测试日志信息输出到文件中
+     */
+    @Test
+    public void testLog4j2(){
+        AyUser ayUser = new AyUser();
+        ayUser.setId("1");
+        ayUser.setName("张三");
+        ayUser.setPassword("123456");
+        ayUserService.delete(ayUser);
+    }
+
 }
