@@ -1,8 +1,15 @@
 package com.yubo.springboot.listener;
 
+import com.google.gson.Gson;
+import com.yubo.springboot.modal.AyUser;
+import com.yubo.springboot.service.AyUserService;
+import org.springframework.data.redis.core.RedisTemplate;
+
+import javax.annotation.Resource;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import java.util.List;
 
 /**
  * @author yubo
@@ -15,6 +22,14 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class AyUserListener implements ServletContextListener {
 
+    @Resource
+    private RedisTemplate redisTemplate;
+    @Resource
+    private AyUserService ayUserService;
+
+    private final String ALL_USER_KEY = "all_user_list";
+    private final Gson gson = new Gson();
+
     /**
      * servlet容器启动程序时调用该方法，然后再创建Filter拦截器
      * 类似于InitializingBean类的功能
@@ -23,7 +38,15 @@ public class AyUserListener implements ServletContextListener {
      */
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        System.out.println("监听对象的创建");
+        System.out.println("将所有用户信息保存到redis中");
+        // 项目初始化时加载所有用户信息
+        List<AyUser> list = ayUserService.findAll();
+        System.out.println("用户数量为：" + list.size());
+        // 将所有用户数据保存到redis中
+        redisTemplate.opsForList().leftPushAll(ALL_USER_KEY, list);
+        List<AyUser> redisList = redisTemplate.opsForList().range(ALL_USER_KEY, 0, -1);
+        System.out.println("redis用户数量为：" + redisList.size());
+//        redisList.stream().forEach(item -> System.out.println(gson.toJson(item)));
     }
 
     /**

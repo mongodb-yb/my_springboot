@@ -22,6 +22,6 @@
 1、web容器中用于监听对象、信息的创建、销毁、增加、修改、删除等动作，常用于统计在线人数或者网站访问量。
 2、监听器分为三种：application-ServletContext、session-HttpSession、request-ServletRequest
 3、根据监听事件分为：
-    对象的创建于销毁：ServletContextListener
+    对象的创建与销毁：ServletContextListener
     对象属性的增加和删除：HttpSessionListener、ServletRequestListener
     Session上某个对象的状态：ServletContextAttributeListener、HttpSessionAttributeListener、HttpRequestAttributeListener

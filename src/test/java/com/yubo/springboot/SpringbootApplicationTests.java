@@ -1,5 +1,7 @@
 package com.yubo.springboot;
 
+import com.google.gson.Gson;
+import com.yubo.springboot.dao.RedisDao;
 import com.yubo.springboot.modal.AyUser;
 import com.yubo.springboot.service.AyUserService;
 import org.junit.jupiter.api.Test;
@@ -115,10 +117,21 @@ class SpringbootApplicationTests {
     @Resource
     private StringRedisTemplate stringRedisTemplate;
 
+    @Resource
+    private RedisDao redisDao;
+
     @Test
     public void testStringRedisTemplate() {
-        stringRedisTemplate.opsForValue().set("name", "波仔");
-        stringRedisTemplate.opsForValue().set("name", "Jack");
+//        AyUser ayUser = new AyUser();
+//        ayUser.setId("4");
+//        ayUser.setName("赵六");
+//        ayUser.setPassword("123456");
+//        redisDao.add("user", ayUser);
+//        System.out.println(redisDao.select("user"));
+//        ayUser.setPassword("654321");
+//        redisDao.update("user", ayUser);
+//        System.out.println(redisDao.select("user"));
+        redisTemplate.opsForList().range("all_user_list", 0, -1).stream().forEach(item -> System.out.println(new Gson().toJson(item)));
     }
 
 }
