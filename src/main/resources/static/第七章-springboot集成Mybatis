@@ -1,0 +1,4 @@
+一、spring-boot集成Mybatis
+    1、导包：mybatis-spring-boot-starter
+    2、application.properties配置文件中进行mybatis配置,也可通过java类进行配置
+

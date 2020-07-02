@@ -23,10 +23,10 @@
         </RollingFile>
     </Appenders>
     <Loggers>
-        <root level="all">
+        <root level="ERROR">
             <!--控制台輸出-->
             <appender-ref ref="Console"/>
-            <appender-ref ref="RollingFileInfo"/>
+<!--            <appender-ref ref="RollingFileInfo"/>-->
         </root>
     </Loggers>
 </Configuration>

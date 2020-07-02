@@ -13,7 +13,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 /**
  * @author yubo
  * @version V1.0
- * @description redis配置类
+ * @description redis存储数据格式配置类
  * @date 2020/4/28 14:24
  */
 @Configuration

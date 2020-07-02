@@ -4,6 +4,7 @@ Log4j2在springboot中的应用
    也可以定义日志的级别，更加细致的控制日志的生成。
 2、组成
    Logger记录器：7个日志等级，用来指定日志的重要程度。日志输出规则：只输出不低于设定级别的日志信息。
+                all<debug<info<warn＜error<fatal<off
    Appenders输出源：Log4j允许把日志输出到控制台，文件等地方。
    Layouts布局：日志信息的输出方式，也就是格式化输出信息。
 3、配置方式

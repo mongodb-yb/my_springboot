@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.yubo.springboot.dao.RedisDao;
 import com.yubo.springboot.modal.AyUser;
 import com.yubo.springboot.service.AyUserService;
+import com.yubo.springboot.service.MybatisAyUserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
@@ -138,12 +139,23 @@ class SpringbootApplicationTests {
      * 测试日志信息输出到文件中
      */
     @Test
-    public void testLog4j2(){
+    public void testLog4j2() {
         AyUser ayUser = new AyUser();
         ayUser.setId("1");
         ayUser.setName("张三");
         ayUser.setPassword("123456");
         ayUserService.delete(ayUser);
+    }
+
+    @Resource
+    private MybatisAyUserService mybatisAyUserService;
+
+    /**
+     * mybatis測試
+     */
+    @Test
+    public void getUserTest() {
+        System.out.println(mybatisAyUserService.getUserById("1"));
     }
 
 }

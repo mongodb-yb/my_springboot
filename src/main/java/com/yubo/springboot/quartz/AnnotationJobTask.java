@@ -15,11 +15,11 @@ import javax.annotation.Resource;
  * @author yubo
  * @version V1.0
  * @description 注解实现定时任务
- * @date 2020/7/2 10:45
+ * @date 20@Component
+ * //@Configurable
+ * //@EnableScheduling20/7/2 10:45
  */
-@Component
-@Configurable
-@EnableScheduling
+//
 public class AnnotationJobTask {
     private static final Logger logger = LogManager.getLogger(AnnotationJobTask.class);
 
