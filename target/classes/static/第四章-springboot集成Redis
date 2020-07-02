@@ -1,0 +1,17 @@
+1、redis的五种数据类型：string、list、set、zset、hash。
+2、springboot 支持多种类型的缓存，比如EhCache、JCache、Redis等。在不添加任何额外配置的情况下
+    springboot默认使用SimpleCacheConfiguration.
+3、我们将数据存放到redis，key和value都是通过Serialize序列化到数据库的，RedisTemplate默认使用Jdk序列化，
+   StringRedisTemplate默认使用StringSerialize序列化。
+配置Redis
+3、引入spring-boot-starter-data-redis的相关依赖
+4、在application.properties的配置文件中进行redis的配置
+5、redis以json数据格式进行存储，需要进行序列化配置，见RedisConfig
+6、测试见RedisDao
+7、默认连接16个redis数据库，0-16。默认连接0号数据库。
+
+Redis缓存在springboot的使用：
+1、项目启动时将所有用户数据加载到redis中，使用时从redis中获取，提高数据访问速度。  见AyUserListener
+2、更新数据：redis中没有数据时，从数据库中查，查出来以后，存入到redis，下次直接从redis中查出。
+
+

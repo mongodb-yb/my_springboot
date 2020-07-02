@@ -55,7 +55,7 @@ public class MailServiceImpl implements MailService {
 //        messageHelper.setTo("ckbianbian@aliyun.com");
         messageHelper.setTo("ckbianbian@aliyun.com");
         // 邮件附件
-        File file = new File("C:\\Users\\Administrator\\Desktop\\亲子鉴定结果.png");
+        File file = new File("C:\\Users\\BoBa\\Desktop\\亲子鉴定结果.jpg");
         messageHelper.addAttachment("亲子鉴定结果", file);
 
         Template template = freemarkerConfiguration.getTemplate("send_template.ftl");

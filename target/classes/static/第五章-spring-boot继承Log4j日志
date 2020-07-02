@@ -1,0 +1,25 @@
+Log4j2在springboot中的应用
+1、介绍
+   Log4j2是apache下的一个开源项目，通过它可以将日志打印到控制台和日志文件中。
+   也可以定义日志的级别，更加细致的控制日志的生成。
+2、组成
+   Logger记录器：7个日志等级，用来指定日志的重要程度。日志输出规则：只输出不低于设定级别的日志信息。
+                all<debug<info<warn＜error<fatal<off
+   Appenders输出源：Log4j允许把日志输出到控制台，文件等地方。
+   Layouts布局：日志信息的输出方式，也就是格式化输出信息。
+3、配置方式
+   两种配置方式：
+   xml：可以配置更多的功能；
+   properties文件：key value ，简单易懂。
+
+springboot集成log4j2
+1、导包
+2、springboot默认使用Logback日志框架，在使用Log4j2之前，先从排除掉该包的依赖。
+   在pom中的spring-boot-starter-web下，使用exclusion排除关联jar包。
+3、添加log4j2配置
+   我们使用xml的方式：
+   在application.properties中：logging.config=classpath:log4j2.xml
+   在resource目录下：新建log4j2.xml文件即可
+4、日志记录到文件
+   日志被打印到控制台，但是项目上线后，是没有控制台的，线上环境中的日志都是被记录到文件中的。
+   在log4j2.xml中配置，使得日志信息打印到文件中。 见删除用户测试。
