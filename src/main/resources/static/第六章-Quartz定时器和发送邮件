@@ -35,6 +35,10 @@
        3、在mvc中引入quartz的配置文件;
        4、在启动类中添加@InportResource(locations={"classpath:spring-mvc.xml"}),使得spring-boot扫描到mvc;
        5、启动项目，定时任务执行.
-    2、注解方式
+    2、注解方式(相当简单)
+       1、@Component：表示是一个spring容器中的普通对象；
+       2、@Configurable：表示一个xml配置文件，被springboot扫描初始化；
+       3、@EnableScheduling：开启对定时任务的支持
+       4、@Scheduled：方法注解：定时任务所执行的方法，并通过cron属性指定执行的时间规则。
 
 

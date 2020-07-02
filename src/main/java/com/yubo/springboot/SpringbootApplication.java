@@ -17,7 +17,8 @@ import javax.servlet.ServletContextListener;
 // Filter直接通过@WebFilter自动注册到容器
 // Listener直接通过@WebListener自动注册到容器
 @ServletComponentScan
-@ImportResource(locations = {"classpath:spring-mvc.xml"})
+// spring-boot将mvc配置文件扫描
+//@ImportResource(locations = {"classpath:spring-mvc.xml"})
 public class SpringbootApplication {
 
     public static void main(String[] args) {
