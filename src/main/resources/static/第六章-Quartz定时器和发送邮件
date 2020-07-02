@@ -42,3 +42,13 @@
        4、@Scheduled：方法注解：定时任务所执行的方法，并通过cron属性指定执行的时间规则。
 
 
+
+一、spring-boot发送邮件
+    1、邮件发送和接收过程
+       发件人使用SMTP协议发送至服务器A；
+       服务器A根据接受者发送至服务器B；
+       收件人使用POP3协议从服务器B接收邮件。
+    2、spring-boot发送邮件
+        1、引入jar包：spring-boot-starter-mail；
+        2、在application.properties中配置邮件信息；
+
