@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <!--定义任务-->
+    <bean id="jobTask" class="com.yubo.springboot.quartz.JobTask"/>
+    <!--定义JobDetail,MethodInvokingJobDetailFactoryBean 继承了 FactoryBean<JobDetail> 和 InitializingBean-->
+    <!--项目一起动，就启动定时任务-->
+    <bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!--引入任务对象-->
+        <property name="targetObject">
+            <ref bean="jobTask"/>
+        </property>
+        <property name="targetMethod">
+            <value>execute</value>
+        </property>
+    </bean>
+
+    <!--定义触发器：任务操作者,CronTriggerFactoryBean 继承了FactoryBean<CronTrigger>, InitializingBean-->
+    <!--项目一起动，就启动定时任务-->
+    <bean id="myTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!--给操作者引入要执行的任务-->
+        <property name="jobDetail">
+            <ref bean="jobDetail"/>
+        </property>
+        <!--定义任务执行规则:每隔10秒执行一次-->
+        <property name="cronExpression">
+            <value>0/10 * * * * ?</value>
+        </property>
+    </bean>
+
+    <!--定义调度中间站：scheduler, 继承了FactoryBean<Scheduler>, InitializingBean-->
+    <!--项目一起动，就启动定时任务-->
+    <bean id="myScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <!--注册任务执行者：触发器-->
+        <property name="triggers">
+            <!--可以注册多个触发器，是个集合-->
+            <list>
+                <ref bean="myTrigger"/>
+            </list>
+        </property>
+    </bean>
+</beans>

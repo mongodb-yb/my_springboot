@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.context.annotation.ImportResource;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -17,6 +17,7 @@ import javax.servlet.ServletContextListener;
 // Filter直接通过@WebFilter自动注册到容器
 // Listener直接通过@WebListener自动注册到容器
 @ServletComponentScan
+@ImportResource(locations = {"classpath:spring-mvc.xml"})
 public class SpringbootApplication {
 
     public static void main(String[] args) {

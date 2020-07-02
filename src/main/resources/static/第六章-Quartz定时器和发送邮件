@@ -28,8 +28,13 @@
     Schedule：负责Quartz的运行环境。Trigger和JobDetail可以注册到Schedule中，Scheduler可以将Trigger绑定到JobDetail中，
     当Trigger触发时，Job就会执行。
 
-三、配置Quartz
+三、springboot配置Quartz
     1、xml方式
+       1、创建spring-mvc.xml;
+       2、创建spring-quartz.xml;
+       3、在mvc中引入quartz的配置文件;
+       4、在启动类中添加@InportResource(locations={"classpath:spring-mvc.xml"}),使得spring-boot扫描到mvc;
+       5、启动项目，定时任务执行.
     2、注解方式
 
 
