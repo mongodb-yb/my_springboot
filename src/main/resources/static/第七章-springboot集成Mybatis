@@ -1,4 +1,9 @@
 一、spring-boot集成Mybatis
     1、导包：mybatis-spring-boot-starter
     2、application.properties配置文件中进行mybatis配置,也可通过java类进行配置
+       #配置mybatis(项目启动时加载扫描路对应路径下的文件)
+       #资源文件xml存放位置
+       mybatis.mapper-locations=classpath:/mappings/*Mapper.xml
+       #接口文件service存放位置
+       mybatis.type-aliases-package=com.yubo.springboot.mappers
 
