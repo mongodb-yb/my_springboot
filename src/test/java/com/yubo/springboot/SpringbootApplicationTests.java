@@ -2,9 +2,14 @@ package com.yubo.springboot;
 
 import com.google.gson.Gson;
 import com.yubo.springboot.dao.RedisDao;
+import com.yubo.springboot.message.producer.UserMoodProducer;
 import com.yubo.springboot.modal.AyUser;
+import com.yubo.springboot.modal.UserMood;
 import com.yubo.springboot.service.AyUserService;
 import com.yubo.springboot.service.MybatisAyUserService;
+import com.yubo.springboot.service.UserMoodService;
+import org.apache.activemq.command.ActiveMQQueue;
+import org.apache.commons.lang.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
@@ -14,8 +19,11 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.annotation.Resource;
+import javax.jms.Destination;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /*SpringRunner继承了SpringJunit4ClassRunner
  * 表明了使用的是SpringJunit4ClassRunner的执行器
@@ -156,6 +164,49 @@ class SpringbootApplicationTests {
     @Test
     public void getUserTest() {
         System.out.println(mybatisAyUserService.getUserById("1"));
+    }
+
+    @Resource
+    private UserMoodService userMoodService;
+
+    /**
+     * 发说说测试
+     */
+    @Test
+    public void userMoodTest() {
+        UserMood userMood = new UserMood();
+        userMood.setId(StringUtils.replace((UUID.randomUUID().toString()), "-", ""));
+        userMood.setContent("我终于有微信了");
+        userMood.setUserId("1");
+        userMood.setPariseNum(0);
+        userMood.setPublishTime(LocalDateTime.now());
+        System.out.println(new Gson().toJson(userMoodService.save(userMood)));
+    }
+
+    @Resource
+    private UserMoodProducer userMoodProducer;
+
+    /**
+     * activemq测试
+     */
+    @Test
+    public void activeMqTest() {
+        Destination destination = new ActiveMQQueue("user_mood_queue");
+        userMoodProducer.sendMessage(destination, "呵呵");
+    }
+
+    /**
+     * 将微信发说说添加到消息队列测试
+     */
+    @Test
+    public void weixinshuoshuoTest() {
+        UserMood userMood = new UserMood();
+        userMood.setId(StringUtils.replace((UUID.randomUUID().toString()), "-", ""));
+        userMood.setContent("哎，消息队列啊");
+        userMood.setUserId("1");
+        userMood.setPariseNum(0);
+        userMood.setPublishTime(LocalDateTime.now());
+        userMoodService.asynSave(userMood);
     }
 
 }
