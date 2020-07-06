@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ImportResource;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -19,6 +19,8 @@ import javax.servlet.ServletContextListener;
 @ServletComponentScan
 // spring-boot将mvc配置文件扫描
 //@ImportResource(locations = {"classpath:spring-mvc.xml"})
+// 开启异步调用
+@EnableAsync
 public class SpringbootApplication {
 
     public static void main(String[] args) {

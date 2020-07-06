@@ -7,12 +7,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.Future;
 
 /**
  * @author yubo
@@ -56,8 +59,28 @@ public class AyUserServiceImpl implements AyUserService {
 
     @Override
     public List<AyUser> findAll() {
-        return ayUserRepository.findAll();
+        // 测同步调用耗时情况
+        logger.info("开始做任务");
+        long start = System.currentTimeMillis();
+        List<AyUser> list = ayUserRepository.findAll();
+        long end = System.currentTimeMillis();
+        logger.info("完成任务，耗时：" + (end - start) + "毫秒");
+        return list;
     }
+
+    @Override
+    // 开启异步调用注解
+    @Async
+    public Future<List<AyUser>> findAsyncUserAll() {
+        // 测异步调用耗时情况
+        logger.info("开始做任务");
+        long start = System.currentTimeMillis();
+        List<AyUser> list = ayUserRepository.findAll();
+        long end = System.currentTimeMillis();
+        logger.info("完成任务，耗时：" + (end - start) + "毫秒");
+        return new AsyncResult<List<AyUser>>(list);
+    }
+
 
     /**
      * 事务测试

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.Future;
 
 /**
  * @author yubo
@@ -18,6 +19,13 @@ public interface AyUserService {
     AyUser findById(String id);
 
     List<AyUser> findAll();
+
+    /**
+     * 异步调用获取全部用户
+     *
+     * @return
+     */
+    Future<List<AyUser>> findAsyncUserAll();
 
     AyUser save(AyUser ayUser);
 

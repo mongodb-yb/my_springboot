@@ -24,6 +24,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.Future;
 
 /*SpringRunner继承了SpringJunit4ClassRunner
  * 表明了使用的是SpringJunit4ClassRunner的执行器
@@ -191,6 +192,7 @@ class SpringbootApplicationTests {
      */
     @Test
     public void activeMqTest() {
+        // 创建一个消息队列
         Destination destination = new ActiveMQQueue("user_mood_queue");
         userMoodProducer.sendMessage(destination, "呵呵");
     }
@@ -208,5 +210,46 @@ class SpringbootApplicationTests {
         userMood.setPublishTime(LocalDateTime.now());
         userMoodService.asynSave(userMood);
     }
+
+    /**
+     * 同步调用测试
+     */
+    @Test
+    public void commonTest() {
+        long startTime = System.currentTimeMillis();
+        System.out.println("第一次查询所有用户");
+        ayUserService.findAll();
+        System.out.println("第二次查询所有用户");
+        ayUserService.findAll();
+        System.out.println("第三次查询所有用户");
+        ayUserService.findAll();
+        long endTime = System.currentTimeMillis();
+        System.out.println("总耗时：" + (endTime - startTime) + "毫秒");
+    }
+
+    /**
+     * 异步调用测试(启动类中开启@EnableAsync注解)
+     * 速度明显比上面的同步调用快了
+     */
+    @Test
+    public void asyncTest() throws Exception {
+        long startTime = System.currentTimeMillis();
+        System.out.println("第一次查询所有用户");
+        Future<List<AyUser>> list1 = ayUserService.findAsyncUserAll();
+        System.out.println("第二次查询所有用户");
+        Future<List<AyUser>> list2 = ayUserService.findAsyncUserAll();
+        System.out.println("第三次查询所有用户");
+        Future<List<AyUser>> list3 = ayUserService.findAsyncUserAll();
+        while (true) {
+            if (list1.isDone() && list2.isDone() && list3.isDone()) {
+                break;
+            }else{
+                Thread.sleep(10);
+            }
+        }
+        long endTime = System.currentTimeMillis();
+        System.out.println("总耗时：" + (endTime - startTime) + "毫秒");
+    }
+
 
 }
