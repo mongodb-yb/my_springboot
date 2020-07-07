@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 import javax.servlet.ServletContextEvent;
@@ -21,6 +22,8 @@ import javax.servlet.ServletContextListener;
 //@ImportResource(locations = {"classpath:spring-mvc.xml"})
 // 开启异步调用
 @EnableAsync
+// 开启重试机制
+@EnableRetry
 public class SpringbootApplication {
 
     public static void main(String[] args) {

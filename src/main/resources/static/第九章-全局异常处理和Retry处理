@@ -1,3 +1,27 @@
 一、spring-boot全局异常
     1、springboot提供了默认的全局异常路径/error,并提供了默认的错误页面。但是实际应用中，我们需要自己来实现异常提示。
-    2、
+    2、自定义错误页面，将springboot默认的错误界面覆盖。
+       1、自定义404.html
+       2、springboot通过java代码来进行配置或者修改配置。
+          springboot2.0以上的版本，会用ErrorPageRegistry接口来实现自定义错误界面的注册。
+          EmbeddedServletContainerCustomizer（嵌入式servlet容器定制）是springboot2.0一下的使用方式。
+    3、全局异常类开发
+       1、业务异常
+          在项目中，我们会遇到各种各样的业务异常。业务异常是指正常的业务处理时，由于某些业务的特殊需求而导致不能继续处理业务
+          而抛出异常。这些异常我们需要统一处理，springboot的全局异常处理很方便。
+二、Retry重试机制
+    1、Retry重试介绍
+       调用一个接口，可能因为网络原因造成第一次失败，再次调用就成功了，这就是重试机制。
+    2、try-catch-redo简单重试模式
+       通过判断返回结果或者监听异常来判断是否重试。
+       简单重试模式可能会出现重试无效，可以增加重试次数或者重试时间间隔-try-catch-redo-retry策略重试模式。
+
+       但是上述模式会造成正常的业务逻辑和重试逻辑的耦合。因此使用spring-retry开源工具包将其解耦。
+    3、spring-retry 重试的两种方式
+       1、Java代码。
+       2、@Retryable
+       3、引入依赖的har包
+          spring-retry、aspectjweaver
+       4、入口类添加@EnableRetry，开启重试机制。
+       5、service方法上使用@Retryable注解
+          @Retryable(value = {BusinessException.class}, maxAttempts = 5, backoff = @Backoff(delay = 5000, multiplier = 2))

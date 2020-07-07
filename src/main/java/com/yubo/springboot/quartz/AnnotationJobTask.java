@@ -26,7 +26,7 @@ public class AnnotationJobTask {
     @Resource
     private MailService mailService;
 
-    @Scheduled(cron = "0/1 * * * * ?")
+//    @Scheduled(cron = "0/1 * * * * ?")
     public void execute() {
         AyUser ayUser = new AyUser();
         ayUser.setId("4");

@@ -4,6 +4,8 @@ import com.yubo.springboot.modal.AyUser;
 import com.yubo.springboot.service.AyUserService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -21,9 +23,9 @@ public class AyUserController {
     @Resource
     private AyUserService ayUserService;
 
-    //    @RequestMapping(value = "/get", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-    @RequestMapping(value = "/get/{id}")
-    public AyUser getUser(@PathVariable(value = "id") String id) {
+    @RequestMapping(value = "/get", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+//    @RequestMapping(value = "/get/{id}")
+    public AyUser getUser(@RequestParam String id) {
         return ayUserService.findById(id);
     }
 }

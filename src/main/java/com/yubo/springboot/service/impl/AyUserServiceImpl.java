@@ -1,12 +1,16 @@
 package com.yubo.springboot.service.impl;
 
+import com.yubo.springboot.error.BusinessException;
 import com.yubo.springboot.modal.AyUser;
+import com.yubo.springboot.modal.exception.ControllerException;
 import com.yubo.springboot.repository.AyUserRepository;
 import com.yubo.springboot.service.AyUserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
@@ -116,9 +120,21 @@ public class AyUserServiceImpl implements AyUserService {
 
     // 下面是4个自定义方法：添加完以后就可以测试了。
 
+    /**
+     * 模拟抛出BusinessException，开启重试机制
+     * value表示出现何种异常时触发重试；
+     * maxAttempts表示最大重试次数；
+     * delay表示延迟时间；
+     * multiplier表示下次重试时间间隔是上次重试时间间隔的n倍
+     *
+     * @param name 姓名
+     * @return
+     */
     @Override
-    public List<AyUser> findByName(String name) {
-        return ayUserRepository.findByName(name);
+    @Retryable(value = {BusinessException.class}, maxAttempts = 5, backoff = @Backoff(delay = 5000, multiplier = 2))
+    public List<AyUser> findByName(String name) throws Exception {
+        System.out.println("findByName" + "方法重试失败了");
+        throw new BusinessException(ControllerException.SYSTEM_ERROR);
     }
 
     @Override

@@ -75,7 +75,11 @@ class SpringbootApplicationTests {
 
         System.out.println(ayUserService.findById("1"));
 
-        System.out.println(ayUserService.findByName("张三"));
+        try {
+            System.out.println(ayUserService.findByName("张三"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         System.out.println(ayUserService.findByNameLike("%四%"));
 
@@ -243,7 +247,7 @@ class SpringbootApplicationTests {
         while (true) {
             if (list1.isDone() && list2.isDone() && list3.isDone()) {
                 break;
-            }else{
+            } else {
                 Thread.sleep(10);
             }
         }
@@ -251,5 +255,17 @@ class SpringbootApplicationTests {
         System.out.println("总耗时：" + (endTime - startTime) + "毫秒");
     }
 
+
+    /**
+     * 重试机制测试
+     */
+    @Test
+    public void retryTest() {
+        try {
+            ayUserService.findByName("哈哈");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

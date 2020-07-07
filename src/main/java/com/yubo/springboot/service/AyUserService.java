@@ -39,7 +39,7 @@ public interface AyUserService {
      */
     Page<AyUser> findAll(Pageable pageable);
 
-    List<AyUser> findByName(String name);
+    List<AyUser> findByName(String name) throws Exception;
 
     List<AyUser> findByNameLike(String name);
 
